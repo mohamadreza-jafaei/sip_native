@@ -17,7 +17,7 @@ class SipNative {
   static bool _speaker = false;
   static ValueNotifier _connectedNotifier = ValueNotifier(false);
 
-  static StreamSubscription _streamSubscription;
+  static StreamSubscription? _streamSubscription;
   static StreamController<String> _streamController =
       StreamController.broadcast();
 
@@ -81,7 +81,7 @@ class SipNative {
   /// please run this first before connecting to a sip server
   static Future<bool> requestPermissions() async {
     bool response = await _methodChannel.invokeMethod('request_permissions');
-    return response ?? false;
+    return response;
   }
 
   /// initSipConnection
@@ -92,9 +92,9 @@ class SipNative {
   /// 4. port -> int : not required default port is 5060 (UDP)
   /// 5. protocol -> String : default is UDP but also TCP and TLS are supported
   static Future<bool> initSipConnection({
-    @required String username,
-    @required String password,
-    @required String domain,
+     String? username,
+     String? password,
+     String? domain,
     int port = 5060,
 
     /// default UDP port is 5060
@@ -115,7 +115,7 @@ class SipNative {
     if (response) {
       _connectedNotifier.value = true;
     }
-    return response ?? false;
+    return response;
   }
 
   /// initCall
